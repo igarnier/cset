@@ -1,0 +1,7 @@
+(executable
+ (name digraph)
+ (libraries cset metapp)
+ (preprocess (pps metapp.ppx metaquot.ppx))
+ ;; This ensures that we don't preprocess digraph.ml before we can load the cset library
+ ;; (preprocessor_deps "../lib/cset.cmxs")
+)
