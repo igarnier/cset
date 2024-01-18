@@ -1,0 +1,6 @@
+(library
+  (name cset_tests)
+  (libraries cset)
+  (inline_tests)
+  (preprocess (pps ppx_expect metapp.ppx metaquot.ppx))
+)

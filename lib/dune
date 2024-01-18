@@ -1,6 +1,5 @@
 (library
  (name cset)
- (libraries containers-data fmt metapp compilers-libs.common)
- (inline_tests)
- (preprocess (pps ppx_expect metaquot.ppx))
- )
+ (libraries containers-data fmt metapp)
+ (preprocess (pps metapp.ppx metaquot.ppx))
+)
