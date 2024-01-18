@@ -157,12 +157,25 @@ let record_type_of_obj schema obj =
     (List.map
        (fun m ->
          { pld_name = Loc.make ~loc:!Ast_helper.default_loc m;
-           pld_mutable = Mutable;
-           pld_type = [%type: column];
+           pld_mutable = Immutable;
+           pld_type = [%type: Cset.Schema.column];
            pld_loc = Location.none;
            pld_attributes = []
          })
        (Array.to_list morphisms))
+
+let typedecl_of_obj schema obj =
+  let (module Builder) = Ppxlib.Ast_builder.make !Ast_helper.default_loc in
+  let open Builder in
+  pstr_type
+    Nonrecursive
+    [ type_declaration
+        ~name:(Located.mk (Format.asprintf "%s_%s" schema.name obj))
+        ~params:[]
+        ~cstrs:[]
+        ~kind:(record_type_of_obj schema obj)
+        ~private_:Public
+        ~manifest:None ]
 
 (* let build_data_frame loc schema obj = *)
 (*   let (module Builder) = Ppxlib.Ast_builder.make loc in *)
@@ -187,4 +200,3 @@ let record_type_of_obj schema obj =
 (*   [%meta *)
 (*     if Sys.ocaml_version >= "4.08.0" then [%e Option.get o] *)
 (*     else [%e match o with None -> invalid_arg "option_get" | Some x -> x]] *)
-
