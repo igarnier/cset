@@ -1,4 +1,0 @@
-(executable
- (public_name cset)
- (name main)
- (libraries cset))
